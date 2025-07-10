@@ -10,11 +10,11 @@ app.use(express.json());
 app.use('/api', rootRouter);
 
 export const prismaClient = new PrismaClient({
-  log: ['query'],
+    log: ['query'],
 });
 
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
-  console.log('Server online');
+    console.log('Server online');
 });

@@ -1,48 +1,46 @@
 import { Request, Response } from 'express';
 import { prismaClient } from '..';
-import {hashSync, compareSync} from 'bcrypt';
+import { hashSync, compareSync } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { JWT_SECRET } from "../secrets";
-import {BadRequest} from '../exceptions/bad-request';
+import { JWT_SECRET } from '../secrets';
+import { BadRequest } from '../exceptions/bad-request';
 import { ErrorCodes } from '../exceptions/root';
 
-
 export const signup = async (req: Request, res: Response) => {
-    const {email, password, name} = req.body;
+  const { email, password, name } = req.body;
 
-    let user = await prismaClient.user.findFirst({where: {email}});
+  let user = await prismaClient.user.findFirst({ where: { email } });
 
-    if (user) {
-        throw new BadRequest('User not found', ErrorCodes.USER_ALREADY_EXISTS);
-    } 
+  if (user) {
+    throw new BadRequest('User not found', ErrorCodes.USER_ALREADY_EXISTS);
+  }
 
-    user = await prismaClient.user.create({
-        data: {
-            name,
-            email,
-            password: hashSync(password, 10)
-        }
-    });
+  user = await prismaClient.user.create({
+    data: {
+      name,
+      email,
+      password: hashSync(password, 10),
+    },
+  });
 
-    res.json(user);
+  res.json(user);
 };
 
 export const login = async (req: Request, res: Response) => {
-    const {email, password} = req.body;
-    let user = await prismaClient.user.findFirst({where: {email}});
+  const { email, password } = req.body;
+  let user = await prismaClient.user.findFirst({ where: { email } });
 
-    if (!user) {
-        throw new BadRequest('User does not exists', ErrorCodes.USER_NOT_FOUND);
-    }
+  if (!user) {
+    throw new BadRequest('User does not exists', ErrorCodes.USER_NOT_FOUND);
+  }
 
-    if (!compareSync(password, user.password)) {
-        return res.status(400).json({
-            message: 'Incorrect password!'
-        });
-    }
+  if (!compareSync(password, user.password)) {
+    return res.status(400).json({
+      message: 'Incorrect password!',
+    });
+  }
 
-    const token = jwt.sign({userId: user.id}, JWT_SECRET);
-    
-    res.json({user, token});
+  const token = jwt.sign({ userId: user.id }, JWT_SECRET);
 
-}
+  res.json({ user, token });
+};

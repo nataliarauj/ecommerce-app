@@ -37,10 +37,34 @@ export const signup = async (
     res.json(user);
 };
 
-// /me -> return the logged in user
-export const me = async (
+export const login = async (
     req: Request,
     res: Response,
+    next: NextFunction
 ) => {
+    const { email, password } = req.body;
+    let user = await prismaClient.user.findFirst({ where: { email } });
+
+    if (!user) {
+        throw new BadRequestException(
+            'User does not exists',
+            ErrorCode.USER_NOT_FOUND
+        );
+    }
+
+    if (!compareSync(password, user.password)) {
+        throw new BadRequestException(
+            'Incorrect password',
+            ErrorCode.INCORRET_PASSWORD
+        );
+    }
+
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET);
+
+    res.json({ user, token });
+};
+
+// /me -> return the logged in user
+export const me = async (req: Request, res: Response) => {
     res.json(req.user);
 };

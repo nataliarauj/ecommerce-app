@@ -25,6 +25,8 @@ model User {
   role Role @default(USER)
   password String
   addresses Address[]
+  defaultShippingAddress Int?
+  defaultBillingAddress Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

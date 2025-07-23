@@ -5,13 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon ./src/index.ts",
-    "format": "prettier --write .",
-    "format: check": "prettier -c .",
-    "format: fix": "prettier --write .",
-    "prepare": "husky",
     "lint": "eslint .",
-    "lint: check": "eslint .",
-    "lint: fix": "eslint . --fix"
+    "lint:check": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier -c .",
+    "format:fix": "prettier --write .",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -22,9 +22,11 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.12",
+    "eslint": "^9.31.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "nodemon": "^3.1.10",
+    "prettier": "3.6.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
@@ -34,8 +36,13 @@
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "prettier": "^3.6.2",
     "prisma": "^6.11.1",
     "zod": "^4.0.2"
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown",
+      "eslint --fix"
+    ]
   }
 }

@@ -13,17 +13,18 @@ export const errorHandler = (method: Function) => {
             if (err instanceof HttpException) {
                 exception = err;
             } else {
-
                 if (err instanceof ZodError) {
-                    exception = new BadRequestException('Unprocessable entity', ErrorCode.UNPROCESSABLE_ENTITY);
+                    exception = new BadRequestException(
+                        'Unprocessable entity',
+                        ErrorCode.UNPROCESSABLE_ENTITY
+                    );
                 } else {
                     exception = new InternalExecption(
-                    'Something when wrong',
-                    err,
-                    ErrorCode.INTERNAL_EXCEPTION
-                );
+                        'Something when wrong',
+                        err,
+                        ErrorCode.INTERNAL_EXCEPTION
+                    );
                 }
-                
             }
             next(exception);
         }

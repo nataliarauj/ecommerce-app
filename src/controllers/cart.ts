@@ -14,60 +14,60 @@ export const addItemToCart = async (req: Request, res: Response) => {
     try {
         product = await prismaClient.product.findFirstOrThrow({
             where: {
-                id: validatedData.productId
-            }
-        })
+                id: validatedData.productId,
+            },
+        });
     } catch (err) {
-        throw new NotFoundException('Product not found', ErrorCode.PRODUCT_NOT_FOUND);
+        throw new NotFoundException(
+            'Product not found',
+            ErrorCode.PRODUCT_NOT_FOUND
+        );
     }
 
     const cart = await prismaClient.cartItem.create({
         data: {
             userId: req.user.id,
             productId: product.id,
-            quantity: validatedData.quantity
-        }
-    })
-
-    res.json(cart);
-}
-
-export const deleteItemFromCart = async (req: Request, res: Response) => {
-    
-
-
-    await prismaClient.cartItem.delete({
-        where: {
-            id: +req.params.id
-        }
+            quantity: validatedData.quantity,
+        },
     });
 
-    res.json({success: true});
-}
+    res.json(cart);
+};
+
+export const deleteItemFromCart = async (req: Request, res: Response) => {
+    await prismaClient.cartItem.delete({
+        where: {
+            id: +req.params.id,
+        },
+    });
+
+    res.json({ success: true });
+};
 
 export const changeQuantity = async (req: Request, res: Response) => {
     const validatedData = changeQuantitySchema.parse(req.body);
     const updatedCart = await prismaClient.cartItem.update({
         where: {
-            id: +req.params.id
+            id: +req.params.id,
         },
         data: {
-            quantity: validatedData.quantity
-        }
+            quantity: validatedData.quantity,
+        },
     });
 
     res.json(updatedCart);
-}
+};
 
 export const getCart = async (req: Request, res: Response) => {
     const cart = await prismaClient.cartItem.findMany({
         where: {
-            userId: req.user.id
+            userId: req.user.id,
         },
         include: {
-            product: true
-        }
+            product: true,
+        },
     });
 
     res.json(cart);
-}
+};

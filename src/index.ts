@@ -5,7 +5,6 @@ import { PrismaClient } from '@prisma/client';
 import { errorMiddleware } from './middlewares/errors';
 import { signupSchema } from './schema/users';
 
-
 const app: Express = express();
 
 app.use(express.json());
@@ -22,15 +21,15 @@ export const prismaClient = new PrismaClient({
                     lineTwo: true,
                     city: true,
                     country: true,
-                    pincode: true
+                    pincode: true,
                 },
                 compute: (addr) => {
-                    return `${addr.lineOne}, ${addr.lineTwo}, ${addr.city}, ${addr.country} - ${addr.pincode}`
-                }
-            }
-        }
-    }
-})
+                    return `${addr.lineOne}, ${addr.lineTwo}, ${addr.city}, ${addr.country} - ${addr.pincode}`;
+                },
+            },
+        },
+    },
+});
 
 app.use(errorMiddleware);
 

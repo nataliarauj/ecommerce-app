@@ -5,7 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx nodemon ./src/index.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "format: check": "prettier -c .",
+    "format: fix": "prettier --write .",
+    "prepare": "husky",
+    "lint": "eslint .",
+    "lint: check": "eslint .",
+    "lint: fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +22,8 @@
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.12",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"

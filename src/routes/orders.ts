@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import authMiddleware from '../middlewares/auth';
 import { errorHandler } from '../error-handler';
-import { cancelOrder, createOrder, getOrderById, listOrders } from '../controllers/orders';
+import {
+    cancelOrder,
+    createOrder,
+    getOrderById,
+    listOrders,
+} from '../controllers/orders';
 
 const ordersRoutes: Router = Router();
 

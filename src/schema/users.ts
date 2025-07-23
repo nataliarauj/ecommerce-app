@@ -1,9 +1,9 @@
-import {z} from 'zod';
+import { z } from 'zod';
 
 export const signupSchema = z.object({
     name: z.string(),
     email: z.string().email(),
-    password: z.string().min(6)
+    password: z.string().min(6),
 });
 
 export const AddressSchema = z.object({
@@ -11,7 +11,7 @@ export const AddressSchema = z.object({
     lineTwo: z.string().nullable(),
     pincode: z.string().length(6),
     country: z.string(),
-    city: z.string()
+    city: z.string(),
 });
 
 export const UpdateUserSchema = z.object({

@@ -4,9 +4,12 @@ import rootRouter from './routes/';
 import { PrismaClient } from '@prisma/client';
 import { errorMiddleware } from './middlewares/errors';
 import { signupSchema } from './schema/users';
+import swaggerUi from 'swagger-ui-express';
+import { SwaggerSpec } from '../swaggerConfig';
 
 const app: Express = express();
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(SwaggerSpec));
 app.use(express.json());
 app.use('/api', rootRouter);
 

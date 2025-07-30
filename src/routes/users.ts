@@ -14,11 +14,11 @@ const usersRoutes: Router = Router();
 /**
  * @openapi
  * /address:
- *   post: 
+ *   post:
  *     summary: adicionar um endereço relacionado ao usuário
  *     tags:
- *         - Users 
- *     responses: 
+ *         - Users
+ *     responses:
  *       200:
  *         description: [Descrição do retorno]
  */
@@ -32,11 +32,11 @@ usersRoutes.post(
 /**
  * @openapi
  * /address/:id:
- *   delete: 
+ *   delete:
  *     summary: deletar um endereço de acordo com o Id do usuário
  *     tags:
- *         - Users 
- *     responses: 
+ *         - Users
+ *     responses:
  *       200:
  *         description: [Descrição do retorno]
  */
@@ -50,11 +50,11 @@ usersRoutes.delete(
 /**
  * @openapi
  * /address:
- *   get: 
+ *   get:
  *     summary: listar endereços cadastrados
  *     tags:
- *        - Users 
- *     responses: 
+ *        - Users
+ *     responses:
  *       200:
  *         description: Retorna um endereço
  */
@@ -63,13 +63,13 @@ usersRoutes.get('/address', [authMiddleware], listAddress);
 /**
  * @openapi
  * /:
- *   patch: 
+ *   patch:
  *     summary: alterar um campo de endereço do usuário
  *     tags:
- *        - Users 
- *     responses: 
+ *        - Users
+ *     responses:
  *       200:
- *         description: Pode alterar qualquer campo 
+ *         description: Pode alterar qualquer campo
  */
 usersRoutes.patch('/', [authMiddleware], errorHandler(updateUser));
 

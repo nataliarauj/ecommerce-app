@@ -11,8 +11,8 @@ import {
 const ordersRoutes: Router = Router();
 
 ordersRoutes.post('/', [authMiddleware], errorHandler(createOrder));
-ordersRoutes.get('/', [authMiddleware], errorHandler(listOrders));
-ordersRoutes.patch('/:id/cancel', [authMiddleware], errorHandler(cancelOrder));
-ordersRoutes.delete('/:id', [authMiddleware], errorHandler(getOrderById));
+ordersRoutes.get('/', errorHandler(listOrders));
+ordersRoutes.get('/:id', errorHandler(getOrderById));
+ordersRoutes.patch('/:id/cancel', errorHandler(cancelOrder));
 
 export default ordersRoutes;

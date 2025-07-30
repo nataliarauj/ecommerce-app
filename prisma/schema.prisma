@@ -92,6 +92,7 @@ model Order {
   user User @relation(fields: [userId], references: [id])
   netAmount Decimal @db.Decimal(10, 2)
   address String
+  status OrderEventStatus @default(PENDING)
   product OrdersProduct[]
   events OrderEvent[]
   createdAt DateTime @default(now())

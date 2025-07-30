@@ -3,8 +3,11 @@ import authMiddleware from '../middlewares/auth';
 import { errorHandler } from '../error-handler';
 import {
     addAddress,
+    changeUserRole,
     deleteAddress,
+    getUserById,
     listAddress,
+    listUsers,
     updateUser,
 } from '../controllers/user';
 import adminMiddleware from '../middlewares/admin';
@@ -72,5 +75,44 @@ usersRoutes.get('/address', [authMiddleware], listAddress);
  *         description: Pode alterar qualquer campo
  */
 usersRoutes.patch('/', [authMiddleware], errorHandler(updateUser));
+
+/**
+ * @openapi
+ * /:id:
+ *   patch:
+ *     summary: alterar cargo de um usuário
+ *     tags:
+ *         - Users
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
+usersRoutes.patch('/:id/role', [adminMiddleware], errorHandler(changeUserRole));
+
+/**
+ * @openapi
+ * /:
+ *   get:
+ *     summary: listar usuários
+ *     tags:
+ *         - Users
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
+usersRoutes.get('/', errorHandler(listUsers));
+
+/**
+ * @openapi
+ * /:id:
+ *   patch:
+ *     summary:
+ *     tags:
+ *         - Users
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
+usersRoutes.patch('/:id', [adminMiddleware], errorHandler(getUserById));
 
 export default usersRoutes;

@@ -3,8 +3,11 @@ import authMiddleware from '../middlewares/auth';
 import { errorHandler } from '../error-handler';
 import {
     addAddress,
+    changeUserRole,
     deleteAddress,
+    getUserById,
     listAddress,
+    listUsers,
     updateUser,
 } from '../controllers/user';
 import adminMiddleware from '../middlewares/admin';
@@ -72,5 +75,11 @@ usersRoutes.get('/address', [authMiddleware], listAddress);
  *         description: Pode alterar qualquer campo
  */
 usersRoutes.patch('/', [authMiddleware], errorHandler(updateUser));
+
+usersRoutes.patch('/:id/role', [authMiddleware, adminMiddleware], errorHandler(changeUserRole));
+
+usersRoutes.get('/:id', [authMiddleware], errorHandler(getUserById));
+
+usersRoutes.get('/', [authMiddleware], errorHandler(listUsers));
 
 export default usersRoutes;

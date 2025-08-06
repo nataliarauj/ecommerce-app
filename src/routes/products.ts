@@ -5,33 +5,35 @@ import {
     deleteProduct,
     getProductById,
     listProducts,
+    searchProducts,
     updateProduct,
 } from '../controllers/products';
 import authMiddleware from '../middlewares/auth';
 import adminMiddleware from '../middlewares/admin';
 
 const productsRoutes: Router = Router();
+productsRoutes.get('/search', errorHandler(searchProducts));
 
 productsRoutes.post(
     '/',
     [authMiddleware, adminMiddleware],
     errorHandler(createProduct)
 );
+
 productsRoutes.patch(
     '/:id',
     [authMiddleware, adminMiddleware],
     errorHandler(updateProduct)
 );
+
 productsRoutes.delete(
     '/:id',
     [authMiddleware, adminMiddleware],
     errorHandler(deleteProduct)
 );
-productsRoutes.get(
-    '/',
-    [authMiddleware, adminMiddleware],
-    errorHandler(listProducts)
-);
+
+productsRoutes.get('/', errorHandler(listProducts));
+
 productsRoutes.get(
     '/:id',
     [authMiddleware, adminMiddleware],

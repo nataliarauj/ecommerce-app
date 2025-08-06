@@ -37,7 +37,24 @@ export const updateProduct = async (req: Request, res: Response) => {
     }
 };
 
-export const deleteProduct = async (req: Request, res: Response) => {};
+export const deleteProduct = async (req: Request, res: Response) => {
+    const id = req.params.id;
+    try {
+        await prismaClient.product.delete({
+            where: {
+                id: +req.params.id!,
+            },
+        });
+
+        res.json({ success: true });
+    } catch (err) {
+        console.log(err);
+        throw new NotFoundException(
+            'Product not found',
+            ErrorCode.PRODUCT_NOT_FOUND
+        );
+    }
+};
 
 export const listProducts = async (req: Request, res: Response) => {
     const count = await prismaClient.product.count();
@@ -62,9 +79,34 @@ export const getProductById = async (req: Request, res: Response) => {
 
         res.json(product);
     } catch (err) {
+        console.log(err);
         throw new NotFoundException(
             'Product not found',
             ErrorCode.PRODUCT_NOT_FOUND
         );
+    }
+};
+
+export const searchProducts = async (req: Request, res: Response) => {
+    console.log('aqui');
+    try {
+        const product = await prismaClient.product.findMany({
+            where: {
+                name: {
+                    search: req.query.q?.toString(),
+                },
+                description: {
+                    search: req.query.q?.toString(),
+                },
+                tags: {
+                    search: req.query.q?.toString(),
+                },
+            },
+        });
+
+        res.json(product);
+    } catch (err) {
+        console.log(err);
+        console.log('Erroooo');
     }
 };

@@ -15,20 +15,7 @@ const productsRoutes: Router = Router();
 
 /**
  * @openapi
- * /search?q="":
- *   get:
- *     summary: pesquisar por produto por query
- *     tags:
- *         - Products
- *     responses:
- *       200:
- *         description: [Descrição do retorno]
- */
-productsRoutes.get('/search', errorHandler(searchProducts));
-
-/**
- * @openapi
- * /:
+ * products/:
  *   post:
  *     summary: criar um novo produto
  *     tags:
@@ -41,7 +28,50 @@ productsRoutes.post('/', [authMiddleware, adminMiddleware], errorHandler(createP
 
 /**
  * @openapi
- * /id:
+ * products/search?q="":
+ *   get:
+ *     summary: pesquisar por produto por query
+ *     tags:
+ *         - Products
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
+productsRoutes.get('/search', errorHandler(searchProducts));
+
+/**
+ * @openapi
+ * products/:
+ *   get:
+ *     summary: listar todos os produtos cadastrados
+ *     tags:
+ *         - Products
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
+productsRoutes.get('/', errorHandler(listProducts));
+
+/**
+ * @openapi
+ * products/id:
+ *   get:
+ *     summary: pesquisar produto por id
+ *     tags:
+ *         - Products
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
+productsRoutes.get(
+	'/:id',
+	[authMiddleware, adminMiddleware],
+	errorHandler(getProductById)
+);
+
+/**
+ * @openapi
+ * products/id:
  *   patch:
  *     summary: alterar campos da tabela produtos
  *     tags:
@@ -58,7 +88,7 @@ productsRoutes.patch(
 
 /**
  * @openapi
- * /id:
+ * products/id:
  *   delete:
  *     summary: deletar produto por id
  *     tags:
@@ -71,36 +101,6 @@ productsRoutes.delete(
 	'/:id',
 	[authMiddleware, adminMiddleware],
 	errorHandler(deleteProduct)
-);
-
-/**
- * @openapi
- * /:
- *   get:
- *     summary: listar todos os produtos cadastrados
- *     tags:
- *         - Products
- *     responses:
- *       200:
- *         description: [Descrição do retorno]
- */
-productsRoutes.get('/', errorHandler(listProducts));
-
-/**
- * @openapi
- * /id:
- *   get:
- *     summary: pesquisar produto por id
- *     tags:
- *         - Products
- *     responses:
- *       200:
- *         description: [Descrição do retorno]
- */
-productsRoutes.get(
-	'/:id',
-	[authMiddleware, adminMiddleware],
-	errorHandler(getProductById)
 );
 
 export default productsRoutes;

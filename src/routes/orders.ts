@@ -12,21 +12,20 @@ const ordersRoutes: Router = Router();
 
 /**
  * @openapi
- * /:
+ *  orders/:
  *   post:
  *     summary: criar um novo pedido
  *     tags:
  *         - Orders
  *     responses:
  *       200:
- *         description: primeiro, é necessário (...) adicionar itens no carrinho para depois fazer a requisição post da tabela 'order'
+ *         description: [Desc]
  */
-
 ordersRoutes.post('/', [authMiddleware], errorHandler(createOrder));
 
 /**
  * @openapi
- * /:
+ * 	orders/:
  *   get:
  *     summary: listar todos as compras
  *     tags:
@@ -39,7 +38,7 @@ ordersRoutes.get('/', errorHandler(listOrders));
 
 /**
  * @openapi
- * /id:
+ * orders/id/:
  *   get:
  *     summary: listar compra por id
  *     tags:
@@ -52,8 +51,8 @@ ordersRoutes.get('/:id', errorHandler(getOrderById));
 
 /**
  * @openapi
- * /id/cancel:
- *   get:
+ * orders/id/cancel:
+ *   patch:
  *     summary: cancelar compra
  *     tags:
  *         - Orders

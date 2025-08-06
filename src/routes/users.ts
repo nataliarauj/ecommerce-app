@@ -2,13 +2,13 @@ import { Router } from 'express';
 import authMiddleware from '../middlewares/auth';
 import { errorHandler } from '../error-handler';
 import {
-    addAddress,
-    changeUserRole,
-    deleteAddress,
-    getUserById,
-    listAddress,
-    listUsers,
-    updateUser,
+	addAddress,
+	changeUserRole,
+	deleteAddress,
+	getUserById,
+	listAddress,
+	listUsers,
+	updateUser,
 } from '../controllers/user';
 import adminMiddleware from '../middlewares/admin';
 
@@ -16,7 +16,7 @@ const usersRoutes: Router = Router();
 
 /**
  * @openapi
- * /address:
+ * users/address:
  *   post:
  *     summary: adicionar um endereço relacionado ao usuário
  *     tags:
@@ -25,34 +25,11 @@ const usersRoutes: Router = Router();
  *       200:
  *         description: [Descrição do retorno]
  */
-
-usersRoutes.post(
-    '/address',
-    [authMiddleware, adminMiddleware],
-    errorHandler(addAddress)
-);
+usersRoutes.post('/address', [authMiddleware, adminMiddleware], errorHandler(addAddress));
 
 /**
  * @openapi
- * /address/:id:
- *   delete:
- *     summary: deletar um endereço de acordo com o Id do usuário
- *     tags:
- *         - Users
- *     responses:
- *       200:
- *         description: [Descrição do retorno]
- */
-
-usersRoutes.delete(
-    '/address/:id',
-    [authMiddleware],
-    errorHandler(deleteAddress)
-);
-
-/**
- * @openapi
- * /address:
+ * users/address:
  *   get:
  *     summary: listar endereços cadastrados
  *     tags:
@@ -65,7 +42,33 @@ usersRoutes.get('/address', [authMiddleware], listAddress);
 
 /**
  * @openapi
- * /:
+ * users/:
+ *   get:
+ *     summary: listar todos os usuários
+ *     tags:
+ *         - Users
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
+usersRoutes.get('/', [authMiddleware], errorHandler(listUsers));
+
+/**
+ * @openapi
+ * /address/id:
+ *   get:
+ *     summary: listar usuário por id
+ *     tags:
+ *         - Users
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
+usersRoutes.get('/:id', [authMiddleware], errorHandler(getUserById));
+
+/**
+ * @openapi
+ * users/:
  *   patch:
  *     summary: alterar um campo de endereço do usuário
  *     tags:
@@ -76,10 +79,35 @@ usersRoutes.get('/address', [authMiddleware], listAddress);
  */
 usersRoutes.patch('/', [authMiddleware], errorHandler(updateUser));
 
-usersRoutes.patch('/:id/role', [authMiddleware, adminMiddleware], errorHandler(changeUserRole));
+/**
+ * @openapi
+ * users/id/role:
+ *   patch:
+ *     summary: alterar o cargo do usuário
+ *     tags:
+ *        - Users
+ *     responses:
+ *       200:
+ *         description: Pode alterar qualquer campo
+ */
+usersRoutes.patch(
+	'/:id/role',
+	[authMiddleware, adminMiddleware],
+	errorHandler(changeUserRole)
+);
 
-usersRoutes.get('/:id', [authMiddleware], errorHandler(getUserById));
+/**
+ * @openapi
+ * users/address/id:
+ *   delete:
+ *     summary: deletar um endereço de acordo com o Id do usuário
+ *     tags:
+ *         - Users
+ *     responses:
+ *       200:
+ *         description: [Descrição do retorno]
+ */
 
-usersRoutes.get('/', [authMiddleware], errorHandler(listUsers));
+usersRoutes.delete('/address/:id', [authMiddleware], errorHandler(deleteAddress));
 
 export default usersRoutes;

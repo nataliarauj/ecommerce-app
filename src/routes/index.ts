@@ -3,7 +3,6 @@ import authRoutes from '../routes/auth';
 import productsRoutes from './products';
 import usersRoutes from './users';
 import cartRoutes from './cart';
-import { listOrders } from '../controllers/orders';
 import ordersRoutes from './orders';
 const rootRouter: Router = Router();
 

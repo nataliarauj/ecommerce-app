@@ -3,9 +3,12 @@ import authMiddleware from '../middlewares/auth';
 import { errorHandler } from '../error-handler';
 import {
 	cancelOrder,
+	changeStatus,
 	createOrder,
 	getOrderById,
+	listAllOrders,
 	listOrders,
+	listUserOrders,
 } from '../controllers/orders';
 
 const ordersRoutes: Router = Router();
@@ -61,5 +64,11 @@ ordersRoutes.get('/:id', errorHandler(getOrderById));
  *         description: [Descrição do retorno]
  */
 ordersRoutes.patch('/:id/cancel', errorHandler(cancelOrder));
+
+ordersRoutes.get('/orders/index', errorHandler(listAllOrders));
+
+ordersRoutes.get('/users/:id', errorHandler(listUserOrders));
+
+ordersRoutes.patch('/orders/:id', errorHandler(changeStatus));
 
 export default ordersRoutes;
